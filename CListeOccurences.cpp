@@ -124,7 +124,8 @@ CArbreBinaire CListeOccurences::creerArbre()
 		occurences_min = getMin();
 		CArbreBinaire* pArbreGauche = new CArbreBinaire(occurences_min[0].Get_caractere(), occurences_min[0].Get_frequence());
 		CArbreBinaire* pArbreDroite = new CArbreBinaire(occurences_min[1].Get_caractere(), occurences_min[1].Get_frequence());
-		CArbreBinaire abr(occurences_min[0].Get_caractere()+occurences_min[1].Get_caractere(), occurences_min[0].Get_frequence() + occurences_min[1].Get_frequence());
+		CArbreBinaire abr(NULL, occurences_min[0].Get_frequence() + occurences_min[1].Get_frequence());
+		//CArbreBinaire abr(occurences_min[0].Get_caractere()+occurences_min[1].Get_caractere(), occurences_min[0].Get_frequence() + occurences_min[1].Get_frequence());
 		abr.set_fils_gauche(*pArbreGauche);
 		abr.set_fils_droit(*pArbreDroite);
 
