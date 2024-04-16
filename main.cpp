@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include "CListeOccurences.h"
+#include "CArbreBinaire.h"
 using namespace std;
 
 int get_size(const char* filename)
@@ -15,41 +16,30 @@ int get_size(const char* filename)
 
 int main()
 {
-    const char* filename;
-    filename = "fichier.txt";
-
-    ofstream os(filename, ios::out);
-    os << "pitié j'ai envie d'en gagner au\nmoins une sur valorant...";
-    os.close();
-
-    /*
-    int filesize = get_size(filename);
-    char* buffer = new char[filesize];
-    ifstream is(filename, ios::in);
-    is.read(buffer, filesize); //lire tout le fichier d'un coup
-    is.close();
-    buffer[filesize] = '\0'; //sinon il rajoute 4 caractères jsp pourquoi mdr
-    cout << buffer << endl;
-
-    //Comptage des occurences de chaque caractère puis tri 
-    CListeOccurences occurences;
-    for (int i = 0; i < filesize; i++) {
-        occurences.ajouterCaractere(buffer[i]);
-    }
-    cout << occurences << endl;
-    */
+    string filename;
+    filename = "texto";
 
     CListeOccurences occurences;
-    ifstream is(filename, ios::in);
+    ifstream is("data/" + filename + ".txt", ios::in);
     string buffer;
     if (is) {
         while (getline(is, buffer)) {
             const char* line = buffer.data();
             for (int i = 0; i < strlen(line); i++) {
                 occurences.ajouterCaractere(line[i]);
-            }
+            }       
         }
     }
     is.close();
-    cout << occurences;
+
+    occurences.trierListe();
+    ofstream os2("data/" + filename + "_freq.txt", ios::out);
+    os2 << occurences;
+    cout << occurences << endl;
+    os2.close();
+
+    cout << "Arbre binaire :" << endl;
+    CArbreBinaire abr(occurences.creerArbre());
+    abr.afficherArbre();
+    return 0;
 }
