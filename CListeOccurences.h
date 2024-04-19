@@ -24,6 +24,7 @@ public:
 	void fusionner(); // fusionne les deux occurences les moins fréquentes (=>les deux premieres)
 	COccurence* getMin(); // Renvoie les deux occurences les moins fréquentes
 	CArbreBinaire creerArbre();
+	static void encode(string, string);
 	void ecritBinaire(string, CArbreBinaire);
 };
 

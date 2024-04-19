@@ -150,21 +150,49 @@ CArbreBinaire CListeOccurences::creerArbre()
 	return liste_arbres[nbSousArbres];
 }
 
+void CListeOccurences::encode(string buffer,string filename)
+{
+	int buffsize = buffer.length();
+	ofstream fs("data/" + filename + "_comp.bin", ios::out | ios::binary);
+	int i = 0, j = 0;
+	string fullStr = "";
+	for (i = 0; i < buffsize; i++)
+		fullStr += buffer[i];
+	for (i = 0; i < fullStr.length(); i += 8)
+	{
+		unsigned char byte = 0;
+		string str8 = "";
+		if (i + 8 < fullStr.length())
+			str8 = fullStr.substr(i, i + 8);
+		else
+			str8 = fullStr.substr(i, fullStr.length());
+		for (unsigned b = 0; b != 8; ++b)
+		{
+			if (b < str8.length())
+				byte |= (str8[b] & 1) << b;
+			else
+				byte |= 1 << b;
+		}
+		fs.put(byte);
+	}
+	int filelen = fs.tellp();
+	fs.close();
+}
+
 void CListeOccurences::ecritBinaire(string filename, CArbreBinaire abr)
 {
 	ifstream is("data/" + filename + ".txt", ios::in);
-	ofstream fs("data/" + filename + "_comp.bin", ios::out | ios::binary);
 	string buffer;
-	if (is && fs) {
-		while (getline(is, buffer)) {
-			const char* line = buffer.data();
-			for (int i = 0; i < buffer.length(); i++) {
-				cout << abr.code_binaire(buffer[i]);
-				fs << abr.code_binaire(buffer[i]);
+	string line;
+	if (is) {
+		while (getline(is, line)) {
+			for (int i = 0; i < line.length(); i++) {
+				buffer += abr.code_binaire(line[i]);
 			}
 		}
 		is.close();
-		fs.close();
+		cout << "buffer: " << buffer << endl;
+		encode(buffer, filename);
 		cout << "\nFichier binaire cr\202\202" << endl;
 	}
 	else {
@@ -187,3 +215,4 @@ ofstream& operator<<(ofstream& fs, const CListeOccurences& l)
 	}
 	return fs;
 }
+

@@ -14,7 +14,6 @@ int get_size(const string& filename)
     return int(in.tellg());
 }
 
-
 int main()
 {
     string filename;
@@ -43,21 +42,22 @@ int main()
     CArbreBinaire abr(occurences.creerArbre());
     abr.afficherArbre();
 
-    cout << "Code binaire de 'a' : " << abr.code_binaire('a') << endl;
-    cout << "Code binaire de 'b' : " << abr.code_binaire('b') << endl;
-    cout << "Code binaire de 'c' : " << abr.code_binaire('c') << endl;
-    cout << "Code binaire de 'd' : " << abr.code_binaire('d') << endl;
-    cout << "Code binaire de 'e' : " << abr.code_binaire('e') << endl;
-    cout << "Code binaire de 'f' : " << abr.code_binaire('f') << endl;
-    
-    //occurences.ecritBinaire(filename, abr);
-    const char* texte = "011";
-    //ecriture du texte dans un fichier binaire
-    ofstream fs("data/"+filename+"_comp.bin", ios::out | ios::binary);
-    fs.write(texte, strlen(texte));
-    fs.close();
-    cout << "taille du fichier texte    : " << get_size("data/"+filename+".txt") << "o" << endl;
-    cout << "taille du fichier binaire  : " << get_size("data/"+filename+"_comp.bin") << "o" << endl;
-    cout << "taille du fichier freq     : " << get_size("data/"+filename+"_freq.txt") << "o" << endl;
-    return 0;
+    occurences.ecritBinaire(filename, abr);
+
+    double size_orig = get_size("data/" + filename + ".txt");
+    double size_comp = get_size("data/" + filename + "_comp.bin");
+    double size_freq = get_size("data/" + filename + "_freq.txt");
+
+    cout << "Taille du fichier original : " << size_orig << " octets" << endl;
+    cout << "Taille du fichier comp     : " << size_comp << " octets" << endl;
+    cout << "Taille du fichier freq     : " << size_freq << " octets" << endl;
+
+    double taux_comp = 1 - ((size_comp+size_freq) / size_orig);
+    cout << "Taux de compression : " << taux_comp << endl;
+
+    double nb_moyen_bit = size_comp / size_orig * 8;
+    cout << "Nombre moyen de bits par caract\212re : " << nb_moyen_bit << endl;
+
+
+     return 0;
 }
