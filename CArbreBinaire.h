@@ -27,6 +27,8 @@ public:
 	char get_label();
 	int get_frequence();
 	void afficherArbre();
-
+	bool est_feuille();
+	bool chemin_existe(char,char*,int);
+	const char* code_binaire(char);
 };
 

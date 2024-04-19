@@ -82,6 +82,65 @@ void CArbreBinaire::afficherArbre()
 	afficherArbre(0);
 }
 
+bool CArbreBinaire::est_feuille()
+{
+	if (m_abrGauche == NULL && m_abrDroite == NULL)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool CArbreBinaire::chemin_existe(char c,char* code,int i)
+{
+	if (m_cLabel == c)
+	{
+		code[i] = '\0';
+		return true;
+	}
+	else
+	{
+		if (m_abrGauche != NULL)
+		{
+			if (m_abrGauche->chemin_existe(c, code,i+1))
+			{
+				code[i] = '0';
+				return true;
+			}
+		}
+		if (m_abrDroite != NULL)
+		{
+			if (m_abrDroite->chemin_existe(c, code,i+1))
+			{
+				code[i] = '1';
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+const char* CArbreBinaire::code_binaire(char c)
+{
+	char* code = new char[24];
+	chemin_existe(c,code,0);
+	int i = 0;
+	while (code[i] != '\0')
+	{
+		i++;
+	}
+	char* temp = new char[i];
+	for (int j = 0; j < i; j++)
+	{
+		temp[j] = code[j];
+	}
+	temp[i] = '\0';
+	return temp;
+}
+
 void CArbreBinaire::afficherArbre(int indent)
 {
 	for (int i = 0; i < indent; i++)

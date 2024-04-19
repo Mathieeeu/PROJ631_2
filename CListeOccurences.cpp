@@ -150,6 +150,28 @@ CArbreBinaire CListeOccurences::creerArbre()
 	return liste_arbres[nbSousArbres];
 }
 
+void CListeOccurences::ecritBinaire(string filename, CArbreBinaire abr)
+{
+	ifstream is("data/" + filename + ".txt", ios::in);
+	ofstream fs("data/" + filename + "_comp.bin", ios::out | ios::binary);
+	string buffer;
+	if (is && fs) {
+		while (getline(is, buffer)) {
+			const char* line = buffer.data();
+			for (int i = 0; i < buffer.length(); i++) {
+				cout << abr.code_binaire(buffer[i]);
+				fs << abr.code_binaire(buffer[i]);
+			}
+		}
+		is.close();
+		fs.close();
+		cout << "\nFichier binaire cr\202\202" << endl;
+	}
+	else {
+		cerr << "Erreur lors de l'ouverture du fichier" << endl;
+	}
+}
+
 ostream& operator<<(ostream& os, const CListeOccurences& l)
 {
 	for (int i = 0; i < l.m_nTaille; i++) {
