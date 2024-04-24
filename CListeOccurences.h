@@ -18,6 +18,7 @@ public:
 	friend ostream& operator<<(ostream&, const CListeOccurences&);
 	friend ofstream& operator<< (ofstream&, const CListeOccurences&);
 	COccurence operator[](int);
+	int Get_taille();
 	void ajouterCaractere(char);
 	bool dansListe(COccurence);
 	void trierListe();

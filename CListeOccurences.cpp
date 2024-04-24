@@ -30,6 +30,11 @@ COccurence CListeOccurences::operator[](int i)
 	return m_pListeOccurences[i];
 }
 
+int CListeOccurences::Get_taille()
+{
+	return m_nTaille;
+}
+
 void CListeOccurences::ajouterCaractere(char c)
 {
 	bool char_trouve = false;
@@ -90,19 +95,30 @@ void CListeOccurences::trierListe()
 void CListeOccurences::fusionner()
 {
 	COccurence* temp = new COccurence[m_nTaille - 1];
-	COccurence o(m_pListeOccurences[0].Get_caractere()+ m_pListeOccurences[1].Get_caractere(), m_pListeOccurences[0].Get_frequence() + m_pListeOccurences[1].Get_frequence());
+	//COccurence o((char)(m_pListeOccurences[0].Get_caractere() + m_pListeOccurences[1].Get_caractere()), m_pListeOccurences[0].Get_frequence() + m_pListeOccurences[1].Get_frequence());
+	COccurence o(NULL, m_pListeOccurences[0].Get_frequence() + m_pListeOccurences[1].Get_frequence());
+
+	bool dans_liste = false;
 
 	for (int i = 2; i < m_nTaille; i++) {
-		temp[i - 2] = m_pListeOccurences[i];
+		if (dans_liste) {
+			temp[i - 1] = m_pListeOccurences[i];
+		}
+		else if (o.Get_frequence() < m_pListeOccurences[i].Get_frequence()) {
+			temp[i - 2] = o;
+			temp[i-1] = m_pListeOccurences[i];
+			dans_liste = true;
+		}
+		else {
+			temp[i - 2] = m_pListeOccurences[i];
+		}
 	}
-
-	temp[m_nTaille - 2] = o;
-
+	if (!dans_liste) {
+		temp[m_nTaille - 2] = o;
+	}
 	delete[] m_pListeOccurences;
 	m_pListeOccurences = temp;
 	m_nTaille--;
-	
-	trierListe();
 }
 
 COccurence* CListeOccurences::getMin()
@@ -122,10 +138,14 @@ CArbreBinaire CListeOccurences::creerArbre()
 	while (m_nTaille > 1) {
 		COccurence* occurences_min = new COccurence[2];
 		occurences_min = getMin();
+		if (occurences_min[1].Get_frequence() == 0) {
+			break;
+		}
 		CArbreBinaire* pArbreGauche = new CArbreBinaire(occurences_min[0].Get_caractere(), occurences_min[0].Get_frequence());
 		CArbreBinaire* pArbreDroite = new CArbreBinaire(occurences_min[1].Get_caractere(), occurences_min[1].Get_frequence());
 		CArbreBinaire abr(NULL, occurences_min[0].Get_frequence() + occurences_min[1].Get_frequence());
-		//CArbreBinaire abr(occurences_min[0].Get_caractere()+occurences_min[1].Get_caractere(), occurences_min[0].Get_frequence() + occurences_min[1].Get_frequence());
+		//CArbreBinaire abr(occurences_min[0].Get_caractere() + occurences_min[1].Get_caractere(), occurences_min[0].Get_frequence() + occurences_min[1].Get_frequence());
+		
 		abr.set_fils_gauche(*pArbreGauche);
 		abr.set_fils_droit(*pArbreDroite);
 
@@ -135,14 +155,26 @@ CArbreBinaire CListeOccurences::creerArbre()
 		i++;
 	}
 	int nbSousArbres = i - 1;
+	bool* arbres_utilises = new bool[nbSousArbres];
+	for (int i = 0; i < nbSousArbres; i++) {
+		arbres_utilises[i] = false;
+	}
+
+
 	for (int i = nbSousArbres; i >= 0; i--) {
+		bool droite = false;
+		bool gauche = false;
 		for (int j = 0; j < nbSousArbres; j++) {
-			if (i != j) {
-				if (liste_arbres[i].get_fils_droit().get_frequence() == liste_arbres[j].get_frequence()) {
+			if (i != j && !arbres_utilises[j]) {
+				if (liste_arbres[i].get_fils_droit().get_frequence() == liste_arbres[j].get_frequence() && liste_arbres[j].get_label() == NULL && !droite) {
 					liste_arbres[i].set_fils_droit(liste_arbres[j]);
+					arbres_utilises[j] = true;
+					droite = true;
 				}
-				if (liste_arbres[i].get_fils_gauche().get_frequence() == liste_arbres[j].get_frequence()) {
+				else if (liste_arbres[i].get_fils_gauche().get_frequence() == liste_arbres[j].get_frequence() && liste_arbres[j].get_label() == NULL && !gauche) {
 					liste_arbres[i].set_fils_gauche(liste_arbres[j]);
+					arbres_utilises[j] = true;
+					gauche = true;
 				}
 			}
 		}
@@ -191,7 +223,7 @@ void CListeOccurences::ecritBinaire(string filename, CArbreBinaire abr)
 			}
 		}
 		is.close();
-		cout << "buffer: " << buffer << endl;
+		//cout << "buffer: " << buffer << endl;
 		encode(buffer, filename);
 		cout << "\nFichier binaire cr\202\202" << endl;
 	}

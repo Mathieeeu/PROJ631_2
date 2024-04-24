@@ -1,5 +1,4 @@
 // TEST PROJET HUFFMAN C++
-// Faire une méthode "static" permet de pas avoir à créer un objet pour exec la méthode genre juste CClasse::Methode
 
 #include <iostream>
 #include <fstream>
@@ -17,7 +16,7 @@ int get_size(const string& filename)
 int main()
 {
     string filename;
-    filename = "texto";
+    filename = "alice";
 
     CListeOccurences occurences;
     ifstream is("data/" + filename + ".txt", ios::in);
@@ -27,7 +26,7 @@ int main()
             const char* line = buffer.data();
             for (int i = 0; i < strlen(line); i++) {
                 occurences.ajouterCaractere(line[i]);
-            }       
+            }
         }
     }
     is.close();
@@ -38,9 +37,24 @@ int main()
     cout << occurences << endl;
     os2.close();
 
+
+    char* liste_caracteres = new char[occurences.Get_taille()];
+    int taille = occurences.Get_taille();
+    for (int i = 0; i < taille; i++) {
+		liste_caracteres[i] = occurences[i].Get_caractere();
+	}
+
     cout << "Arbre binaire :" << endl;
     CArbreBinaire abr(occurences.creerArbre());
+
+    
+    for (int i = 0; i < taille; i++) {
+        cout << liste_caracteres[i] << ":" << abr.code_binaire(liste_caracteres[i]) << endl;
+    }
+    
+
     abr.afficherArbre();
+
 
     occurences.ecritBinaire(filename, abr);
 
@@ -53,11 +67,15 @@ int main()
     cout << "Taille du fichier freq     : " << size_freq << " octets" << endl;
 
     double taux_comp = 1 - ((size_comp+size_freq) / size_orig);
-    cout << "Taux de compression : " << taux_comp << endl;
+    if (taux_comp < 0) {
+		cout << "Compression impossible - le fichier original est trop petit (Taux : " << taux_comp << ")" << endl;
+	}
+    else {
+        cout << "Taux de compression : " << taux_comp << endl;
+    }
 
     double nb_moyen_bit = size_comp / size_orig * 8;
     cout << "Nombre moyen de bits par caract\212re : " << nb_moyen_bit << endl;
-
 
      return 0;
 }

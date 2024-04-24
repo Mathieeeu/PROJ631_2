@@ -2,24 +2,24 @@
 
 
 CArbreBinaire::CArbreBinaire()
-	:m_cLabel(NULL),m_nFrequence(0),m_abrGauche(NULL),m_abrDroite(NULL)
+	:m_cLabel(NULL),m_nFrequence(0),m_abrGauche(NULL),m_abrDroite(NULL),deja_present(false)
 {
 }
 
 CArbreBinaire::CArbreBinaire(char label, int f)
-	:m_cLabel(label), m_nFrequence(f), m_abrGauche(NULL), m_abrDroite(NULL)
+	:m_cLabel(label), m_nFrequence(f), m_abrGauche(NULL), m_abrDroite(NULL),deja_present(false)
 {
 }
 
 CArbreBinaire::CArbreBinaire(char label, int f, CArbreBinaire& gauche, CArbreBinaire& droite)
-	:m_cLabel(label), m_nFrequence(f), m_abrGauche(NULL), m_abrDroite(NULL)
+	:m_cLabel(label), m_nFrequence(f), m_abrGauche(NULL), m_abrDroite(NULL),deja_present(false)
 {
 	this->m_abrDroite=&droite;
 	this->m_abrGauche = &gauche;
 }
 
 CArbreBinaire::CArbreBinaire(const CArbreBinaire& abr)
-	:m_cLabel(abr.m_cLabel), m_nFrequence(abr.m_nFrequence), m_abrGauche(abr.m_abrGauche), m_abrDroite(abr.m_abrDroite)
+	:m_cLabel(abr.m_cLabel), m_nFrequence(abr.m_nFrequence), m_abrGauche(abr.m_abrGauche), m_abrDroite(abr.m_abrDroite),deja_present(false)
 {
 }
 
@@ -57,14 +57,25 @@ void CArbreBinaire::set_frequence(int f)
 	this->m_nFrequence = f;
 }
 
+
 CArbreBinaire CArbreBinaire::get_fils_droit()
 {
 	return *m_abrDroite;
 }
 
+bool CArbreBinaire::get_deja_present()
+{
+	return deja_present;
+}
+
 CArbreBinaire CArbreBinaire::get_fils_gauche()
 {
 	return *m_abrGauche;
+}
+
+void CArbreBinaire::set_deja_present(bool b)
+{
+	this->deja_present = b;
 }
 
 char CArbreBinaire::get_label()
@@ -147,8 +158,12 @@ void CArbreBinaire::afficherArbre(int indent)
 	{
 		cout << "  | ";
 	}
-
-	cout << m_cLabel << "(" << m_nFrequence << ")" << endl;
+	if (m_cLabel != NULL) {
+		cout << m_cLabel << "(" << m_nFrequence << ")" << endl;
+	}
+	else {
+		cout << "NODE" << "(" << m_nFrequence << ")" << endl;
+	}
 
 	if (m_abrGauche != NULL)
 	{

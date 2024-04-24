@@ -10,6 +10,7 @@ private:
 	int m_nFrequence;
 	CArbreBinaire* m_abrGauche;
 	CArbreBinaire* m_abrDroite;
+	bool deja_present;
 	void afficherArbre(int);
 
 public:
@@ -22,6 +23,8 @@ public:
 	void set_fils_gauche(CArbreBinaire&);
 	void set_label(char);
 	void set_frequence(int);
+	bool get_deja_present();
+	void set_deja_present(bool);
 	CArbreBinaire get_fils_droit();
 	CArbreBinaire get_fils_gauche();
 	char get_label();
