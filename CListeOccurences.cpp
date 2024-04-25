@@ -185,7 +185,7 @@ CArbreBinaire CListeOccurences::creerArbre()
 void CListeOccurences::encode(string buffer,string filename)
 {
 	int buffsize = buffer.length();
-	ofstream fs("data/" + filename + "_comp.bin", ios::out | ios::binary);
+	ofstream fs("output/" + filename + "_comp.bin", ios::out | ios::binary);
 	int i = 0, j = 0;
 	string fullStr = "";
 	for (i = 0; i < buffsize; i++)
