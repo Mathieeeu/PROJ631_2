@@ -29,7 +29,7 @@ Algorithme
 4. Détermination et affichage du taux de compression obtenu
 5. Détermination et affichage du nombre moyen de bits par caractère dans le texte codé
 
-Classes créées
+Classes
 -----------
 - **COccurrence** : classe permettant de stocker les informations sur une occurrence d'un caractère
 - **CListeOccurrences** : classe permettant de stocker une liste d'occurrences, cette classe est utilisée pour construire l'arbre de Huffman et pour coder le texte
