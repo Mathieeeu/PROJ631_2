@@ -3,6 +3,7 @@ Compression de données par codage de Huffman
 Introduction
 -----------
 Le codage de Huffman est une méthode de compression de données sans perte. Elle a été développée par David A. Huffman en 1952. Cette méthode est basée sur la fréquence d'apparition des symboles dans le texte à compresser. Les symboles les plus fréquents sont codés sur moins de bits que les symboles les moins fréquents, alors qu'habituellement, chaque symbole est codé sur huit bits.
+
 J'ai choisi de réaliser ce projet en C++ car c'est un langage que j'apprécie et que nous n'avons pas encore utilisé cette année. De plus, il est bien adapté pour la manipulation de fichiers.
 
 Features
