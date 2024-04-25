@@ -1,5 +1,5 @@
 .vs/
 .vscode/
 x64/
-proj631/x64/
-.user
+proj631/
+*.user
