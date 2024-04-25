@@ -20,6 +20,7 @@ Utilisation
 Pour compresser un fichier texte, il faut executer l'application `huffman.exe` ou lancer le programme `main.cpp` avec un compilateur C++.
 Une fois le programme lancé, il faut choisir le fichier texte à compresser. Celui-ci doit se trouver dans un répertoire nommé `data` à la racine du projet.
 Les fichiers renvoyés (table de fréquence, texte binaire) se trouvent dans le répertoire `output` à la racine du projet. 
+
 Il est possible de visualiser la table de fréquence, l'arbre de Huffman, le codage de chaque symbole et la performance de la compression en modifiant les variables booléennes dans la fonction principale du fichier `main.cpp`.
 
 Algorithme
