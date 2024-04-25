@@ -31,16 +31,16 @@ Algorithme
 
 Classes créées
 -----------
-- COccurrence : classe permettant de stocker les informations sur une occurrence d'un caractère
-- CListeOccurrences : classe permettant de stocker une liste d'occurrences, cette classe est utilisée pour construire l'arbre de Huffman et pour coder le texte
-- CArbreBinaire : classe permettant de gérer un arbre binaire
+- **COccurrence** : classe permettant de stocker les informations sur une occurrence d'un caractère
+- **CListeOccurrences** : classe permettant de stocker une liste d'occurrences, cette classe est utilisée pour construire l'arbre de Huffman et pour coder le texte
+- **CArbreBinaire** : classe permettant de gérer un arbre binaire
 
 Fonctions principales
 -----------
-- compresser_fichier : fonction permettant de compresser un fichier texte dont le nom est passé en paramètre. Elle prend aussi des booléens en paramètres pour l'affichage dans la console.
-- creerArbre : méthode de la classe CListeOccurrences permettant de construire l'arbre de Huffman à partir de la liste des occurrences. Elle crée une liste de noeuds et les fusionne jusqu'à obtenir un seul noeud racine.
-- code_binaire : méthode de la classe CArbreBinaire renvoyant le code binaire d'un caractère donné en paramètre selon l'arbre de Huffman. Elle fait appel à la méthode `chemin_existe` qui renvoie le chemin de la racine à un noeud donné, en mettant un 0 si on va à gauche et un 1 si on va à droite jusqu'à atteindre le caractère recherché.
-- ecritBinaire : méthode de la classe CLiseOccurrences permettant d'écrire le texte compressé dans un fichier binaire. Elle prend en paramètre le nom du fichier texte et l'arbre de Huffman construit précédemment. Pour chaque caractère de chaque ligne du fichier texte, elle appelle la méthode `code_binaire` pour obtenir le code du caractère et l'écrit dans le fichier binaire.
+- **compresser_fichier** : fonction permettant de compresser un fichier texte dont le nom est passé en paramètre. Elle prend aussi des booléens en paramètres pour l'affichage dans la console.
+- **creerArbre** : méthode de la classe CListeOccurrences permettant de construire l'arbre de Huffman à partir de la liste des occurrences. Elle crée une liste de noeuds et les fusionne jusqu'à obtenir un seul noeud racine.
+- **code_binaire** : méthode de la classe CArbreBinaire renvoyant le code binaire d'un caractère donné en paramètre selon l'arbre de Huffman. Elle fait appel à la méthode `chemin_existe` qui renvoie le chemin de la racine à un noeud donné, en mettant un 0 si on va à gauche et un 1 si on va à droite jusqu'à atteindre le caractère recherché.
+- **ecritBinaire** : méthode de la classe CLiseOccurrences permettant d'écrire le texte compressé dans un fichier binaire. Elle prend en paramètre le nom du fichier texte et l'arbre de Huffman construit précédemment. Pour chaque caractère de chaque ligne du fichier texte, elle appelle la méthode `code_binaire` pour obtenir le code du caractère et l'écrit dans le fichier binaire.
 
 -----------
-DOCHER Mathieu - IDU3 - Polytech Annecy
+_DOCHER Mathieu - IDU3 - Polytech Annecy_
